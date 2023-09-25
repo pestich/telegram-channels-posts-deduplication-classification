@@ -1,42 +1,42 @@
-# Дедупликатор и классификатор постов телеграм-каналов
+# Telegram Channel Post Deduplicator and Classifier
 
-Этот проект представляет собой инструмент для анализа и обработки текстовых данных из телеграм-каналов. Он включает в себя два основных компонента: дедупликатор и классификатор текстов. Проект реализован с использованием различных библиотек и технологий, включая nltk, spacy, datasketch, transformers и sentence-transformers, микросервис реализован на FastAPI.
+This project is a tool for analyzing and processing textual data from Telegram channels. It consists of two main components: a deduplicator and a text classifier. The project is implemented using various libraries and technologies, including nltk, spacy, datasketch, transformers, and sentence-transformers. The microservice is built using FastAPI.
 
-## Основные функции проекта:
+## Key Features of the Project:
 
-### Предобработка данных
+### Data Preprocessing
 
-На этапе предобработки данных производится очистка и подготовка текстов. Две основные версии предобработки включают:
+During the data preprocessing stage, text is cleaned and prepared. There are two main versions of data preprocessing:
 
-1. **С лемматизацией текстов:** Тексты подвергаются лемматизации с использованием библиотеки spacy. Этот этап помогает снизить размерность данных и улучшить точность анализа, но требует больших временных затрат. 
+1. **With Text Lemmatization:** Texts undergo lemmatization using the spacy library. This step helps reduce data dimensionality and improve analysis accuracy but requires more time.
 
-2. **Без лемматизации:** Тексты также проходят очистку, но лемматизация не выполняется. 
+2. **Without Lemmatization:** Texts are also cleaned but without lemmatization.
 
-### Дедупликация текстов
+### Text Deduplication
 
-Дедупликация текстов включает два этапа:
+Text deduplication consists of two stages:
 
-1. **MinHash и LSH:** На этом этапе определяются потенциальные дубликаты текстов. Эти алгоритмы позволяют быстро выявить кандидатов на дубликаты, также такой подход легко масштабируется и позволяет обрабатывать десятки тысяч сообщений. 
+1. **MinHash and LSH:** At this stage, potential text duplicates are identified. These algorithms allow for quick detection of duplicate candidates, and this approach is easily scalable to process tens of thousands of messages.
 
-2. **Оценка косинусной близости (SBERT):** После получения кандидатов на дубликаты, тексты проверяются на косинусную близость с использованием модели SBERT (Sentence-BERT). Этот этап помогает окончательно определить, действительно ли тексты являются дубликатами.
+2. **Cosine Similarity Evaluation (SBERT):** After obtaining duplicate candidates, texts are checked for cosine similarity using the SBERT (Sentence-BERT) model. This step helps determine whether the texts are indeed duplicates.
 
-На каждом из этапов можно задать пороговые значения. Это позволяет гибко настраивать сервис дедупликации, выбирая золотую середину между качеством и скоростью работы алгоритма. 
+Threshold values can be set at each stage, providing flexibility in configuring the deduplication service and striking a balance between quality and algorithm speed.
 
-### Классификация текстов
+### Text Classification
 
-Задача классификации заключается в отнесении текстов к одной из 29 предопределенных классов (тематик). Для этой задачи используется два метода:
+The classification task involves categorizing texts into one of 29 predefined classes (topics). Two methods are used for this task:
 
-1. **BERT:** Определение текста в один из 27 классов.
+1. **BERT:** Assigning text to one of the 27 classes.
 
-2. **Система правил:** Для некоторых специфических тематик классификация производится на основе правил, связанных с идентификаторами телеграм-каналов. Это позволяет точно классифицировать тексты в дополнительные 2 класса.
+2. **Rule-Based System:** For specific topics, classification is based on rules associated with Telegram channel identifiers. This allows for precise classification into two additional classes.
 
-## Технологии и библиотеки
+## Technologies and Libraries
 
-Проект использует следующие технологии и библиотеки:
+The project utilizes the following technologies and libraries:
 
-- [nltk](https://www.nltk.org/): Библиотека для обработки естественного языка.
-- [spacy](https://spacy.io/): Инструмент для лемматизации и обработки текстов.
-- [datasketch](https://ekzhu.github.io/datasketch/index.html): Библиотека для работы с алгоритмами MinHash и LSH.
-- [transformers](https://huggingface.co/transformers/): Библиотека для работы с моделями Transformer.
-- [sentence-transformers](https://www.sbert.net/): Библиотека для работы с моделью SBERT.
-- [FastAPI](https://fastapi.tiangolo.com/): Фреймворк для создания микросервисов.
+- [nltk](https://www.nltk.org/): A library for natural language processing.
+- [spacy](https://spacy.io/): A tool for lemmatization and text processing.
+- [datasketch](https://ekzhu.github.io/datasketch/index.html): A library for working with MinHash and LSH algorithms.
+- [transformers](https://huggingface.co/transformers/): A library for working with Transformer models.
+- [sentence-transformers](https://www.sbert.net/): A library for working with the SBERT model.
+- [FastAPI](https://fastapi.tiangolo.com/): A framework for building microservices.
